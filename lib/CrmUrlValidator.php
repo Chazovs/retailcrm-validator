@@ -62,7 +62,6 @@ class CrmUrlValidator extends ConstraintValidator
             $crmDomains->domains[$key]->domain = sprintf("%s.%s", $subdomain, $domain->domain);
         }
 
-
         return array_merge($crmDomains->domains, $boxDomains->domains);
     }
 }
