@@ -24,6 +24,11 @@
   "autoload": {
     "psr-0": { "RetailCrm\\": "lib/" }
   },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1-dev"
+    }
+  },
   "config": {
     "bin-dir": "vendor/bin",
     "process-timeout": 600
