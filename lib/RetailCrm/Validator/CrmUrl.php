@@ -23,4 +23,9 @@ class CrmUrl extends Constraint
     {
         return static::class .'Validator';
     }
+
+    public function getTargets()
+    {
+        return self::PROPERTY_CONSTRAINT;
+    }
 }
