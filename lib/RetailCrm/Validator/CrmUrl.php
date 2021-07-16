@@ -1,6 +1,6 @@
 <?php
 
-namespace Retailcrm\Validator;
+namespace RetailCrm\Validator;
 
 
 use Symfony\Component\Validator\Constraint;
