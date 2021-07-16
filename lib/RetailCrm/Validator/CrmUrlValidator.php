@@ -28,21 +28,18 @@ class CrmUrlValidator extends ConstraintValidator
         $validDomains = $this->getValidDomains($crmUrl['host']);
 
         if (false === array_search($crmUrl['host'], $validDomains)) {
-            $this->context->buildViolation($constraint->domainFail)
-                ->addViolation();
+            $this->context->buildViolation($constraint->domainFail)->addViolation();
         }
     }
 
     private function checkUrlFormat(array $crmUrl, Constraint $constraint)
     {
         if (isset($crmUrl['scheme']) && $crmUrl['scheme'] !== 'https') {
-            $this->context->buildViolation($constraint->schemeFail)
-                ->addViolation();
+            $this->context->buildViolation($constraint->schemeFail)->addViolation();
         }
 
         if (isset($crmUrl['path']) && $crmUrl['path'] !== '/' && $crmUrl['path'] !== '') {
-            $this->context->buildViolation($constraint->pathFail)
-                ->addViolation();
+            $this->context->buildViolation($constraint->pathFail)->addViolation();
         }
 
         if (isset($crmUrl['port']) && !empty($crmUrl['port'])) {
@@ -53,15 +50,18 @@ class CrmUrlValidator extends ConstraintValidator
 
     private function getValidDomains($host)
     {
-        $subdomain = explode($host, '.')[0];
+        $subdomain = explode('.', $host)[0];
 
-        $boxDomains = json_decode(file_get_contents("https://infra-data.retailcrm.tech/box-domains.json"));
-        $crmDomains = json_decode(file_get_contents("https://infra-data.retailcrm.tech/crm-domains.json"));
+        $boxDomainsContent = json_decode(file_get_contents("https://infra-data.retailcrm.tech/box-domains.json"), true);
+        $crmDomainsContent = json_decode(file_get_contents("https://infra-data.retailcrm.tech/crm-domains.json"), true );
 
-        foreach ($crmDomains->domains as $key=>$domain){
-            $crmDomains->domains[$key]->domain = sprintf("%s.%s", $subdomain, $domain->domain);
+        $boxDomains = array_column($boxDomainsContent['domains'], 'domain');
+        $crmDomains = array_column($crmDomainsContent['domains'], 'domain');
+
+        foreach ($crmDomains as $key => $domain){
+            $crmDomains[$key] = sprintf("%s.%s", $subdomain, $domain);
         }
 
-        return array_merge($crmDomains->domains, $boxDomains->domains);
+        return array_merge($boxDomains, $crmDomains);
     }
 }
