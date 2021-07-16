@@ -1,5 +1,5 @@
 {
-  "name": "chazov/validator",
+  "name": "retailcrm/validator",
   "description": "Validator for symfony projects",
   "type": "library",
   "keywords": ["Validator", "retailCRM"],
