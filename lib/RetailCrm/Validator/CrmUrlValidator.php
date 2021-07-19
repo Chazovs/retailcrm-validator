@@ -15,25 +15,38 @@ use Symfony\Component\Validator\ConstraintValidator;
 class CrmUrlValidator extends ConstraintValidator
 {
     /**
-     * Функция проверки валидности значения
+     * Validate CRM URL
      *
-     * @param mixed      $value Проверяемое значение
+     * @param mixed      $value URL from form
      * @param Constraint $constraint Ограничение для валидации
      */
     public function validate($value, Constraint $constraint)
     {
-        $crmUrl = parse_url($value);
-        $this->checkUrlFormat($crmUrl, $constraint);
+        $urlArray = parse_url($value);
 
-        $validDomains = $this->getValidDomains($crmUrl['host']);
+        if ($this->checkUrlFormat($urlArray, $constraint)) {
+            $validDomains = $this->getValidDomains($urlArray['host']);
 
-        if (false === array_search($crmUrl['host'], $validDomains)) {
-            $this->context->buildViolation($constraint->domainFail)->addViolation();
+            if (false === array_search($urlArray['host'], $validDomains)) {
+                $this->context->buildViolation($constraint->domainFail)->addViolation();
+            }
         }
     }
 
-    private function checkUrlFormat(array $crmUrl, Constraint $constraint)
+    /**
+     * @param array                                   $crmUrl
+     * @param \Symfony\Component\Validator\Constraint $constraint
+     *
+     * @return bool
+     */
+    private function checkUrlFormat(array $crmUrl, Constraint $constraint): bool
     {
+        if (!isset($crmUrl['scheme']) || !isset($crmUrl['host'])) {
+            $this->context->buildViolation($constraint->noValidUrlHost)->addViolation();
+
+            return false;
+        }
+
         if (isset($crmUrl['scheme']) && $crmUrl['scheme'] !== 'https') {
             $this->context->buildViolation($constraint->schemeFail)->addViolation();
         }
@@ -43,22 +56,26 @@ class CrmUrlValidator extends ConstraintValidator
         }
 
         if (isset($crmUrl['port']) && !empty($crmUrl['port'])) {
-            $this->context->buildViolation($constraint->portFail)
-                ->addViolation();
+            $this->context->buildViolation($constraint->portFail)->addViolation();
         }
+
+        return true;
     }
 
-    private function getValidDomains($host)
+    /**
+     * @param string $host
+     *
+     * @return array
+     */
+    private function getValidDomains(string $host): array
     {
         $subdomain = explode('.', $host)[0];
-
         $boxDomainsContent = json_decode(file_get_contents("https://infra-data.retailcrm.tech/box-domains.json"), true);
-        $crmDomainsContent = json_decode(file_get_contents("https://infra-data.retailcrm.tech/crm-domains.json"), true );
-
+        $crmDomainsContent = json_decode(file_get_contents("https://infra-data.retailcrm.tech/crm-domains.json"), true);
         $boxDomains = array_column($boxDomainsContent['domains'], 'domain');
         $crmDomains = array_column($crmDomainsContent['domains'], 'domain');
 
-        foreach ($crmDomains as $key => $domain){
+        foreach ($crmDomains as $key => $domain) {
             $crmDomains[$key] = sprintf("%s.%s", $subdomain, $domain);
         }
 
