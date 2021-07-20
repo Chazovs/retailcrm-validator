@@ -14,11 +14,14 @@ use Symfony\Component\Validator\Constraint;
  */
 class CrmUrl extends Constraint
 {
-    public string $schemeFail = 'Неверный протокол. Допустим только https.';
-    public string $pathFail = 'Путь домена должен быть пустым.';
-    public string $portFail = 'Порт указывать не нужно.';
-    public string $domainFail = 'Указан неверный домен.';
-    public string $noValidUrlHost = 'Невалидный URL.';
+    public string $schemeFail = 'Invalid protocol. The only https is allowed.';
+    public string $pathFail = 'The domain path must be empty.';
+    public string $portFail = 'Do not need to specify the port.';
+    public string $domainFail = 'Invalid domain specified.';
+    public string $noValidUrlHost = 'Invalid URL.';
+    public string $queryFail = 'The query must be empty.';
+    public string $fragmentFail = 'The fragment must be empty.';
+    public string $authFail = 'No need to provide authorization data';
 
     public function validatedBy(): string
     {

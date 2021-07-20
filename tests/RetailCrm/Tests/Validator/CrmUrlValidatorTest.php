@@ -55,38 +55,46 @@ class CrmUrlValidatorTest extends TestCase
         $failedUrls = [
             [
                 'url' => 'http://asd.retailcrm.ru',
-                'errors' => ['Неверный протокол. Допустим только https.'],
+                'errors' => ['Invalid protocol. The only https is allowed.'],
             ],
             [
                 'url' => 'https://test.retailcrm.pro:8080',
-                'errors' => ['Порт указывать не нужно.'],
+                'errors' => ['Do not need to specify the port.'],
             ],
             [
                 'url' => 'https://raisa.retailcrm.ess',
-                'errors' => ['Указан неверный домен.'],
+                'errors' => ['Invalid domain specified.'],
             ],
             [
                 'url' => 'https://blabla.simlla.com',
-                'errors' => ['Указан неверный домен.'],
+                'errors' => ['Invalid domain specified.'],
             ],
             [
                 'url' => 'https:/blabla.simlachat.ru',
-                'errors' => ['Невалидный URL.'],
+                'errors' => ['Invalid URL.'],
             ],
             [
                 'url' => 'htttps://blabla.ecomlogic.com',
-                'errors' => ['Неверный протокол. Допустим только https.'],
+                'errors' => ['Invalid protocol. The only https is allowed.'],
             ],
             [
                 'url' => 'https://blabla.ecomlogic.com/test',
-                'errors' => ['Путь домена должен быть пустым.'],
+                'errors' => ['The domain path must be empty.'],
             ],
             [
                 'url' => 'htttps://blabla.eecomlogic.com/test',
                 'errors' => [
-                    'Неверный протокол. Допустим только https.',
-                    'Путь домена должен быть пустым.',
-                    'Указан неверный домен.',
+                    'Invalid protocol. The only https is allowed.',
+                    'The domain path must be empty.',
+                    'Invalid domain specified.',
+                ],
+            ],
+            [
+                'url' => 'https://blabla.eecomlogic.com/test',
+                'errors' => [
+                    'Invalid protocol. The only https is allowed.',
+                    'The domain path must be empty.',
+                    'Invalid domain specified.',
                 ],
             ],
         ];

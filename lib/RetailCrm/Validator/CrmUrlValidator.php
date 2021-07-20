@@ -47,6 +47,30 @@ class CrmUrlValidator extends ConstraintValidator
             return false;
         }
 
+        if (isset($crmUrl['query']) && !empty($crmUrl['query'])) {
+            $this->context->buildViolation($constraint->queryFail)->addViolation();
+
+            return false;
+        }
+
+        if (isset($crmUrl['pass']) && !empty($crmUrl['pass'])) {
+            $this->context->buildViolation($constraint->authFail)->addViolation();
+
+            return false;
+        }
+
+        if (isset($crmUrl['user']) && !empty($crmUrl['user'])) {
+            $this->context->buildViolation($constraint->authFail)->addViolation();
+
+            return false;
+        }
+
+        if (isset($crmUrl['fragment']) && !empty($crmUrl['fragment'])) {
+            $this->context->buildViolation($constraint->fragmentFail)->addViolation();
+
+            return false;
+        }
+
         if (isset($crmUrl['scheme']) && $crmUrl['scheme'] !== 'https') {
             $this->context->buildViolation($constraint->schemeFail)->addViolation();
         }

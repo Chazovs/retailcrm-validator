@@ -16,11 +16,11 @@ class CrmUrlTest extends TestCase
     {
         $crmUrl = new CrmUrl();
 
-        self::assertEquals('Указан неверный домен.', $crmUrl->domainFail);
-        self::assertEquals('Невалидный URL.', $crmUrl->noValidUrlHost);
-        self::assertEquals('Порт указывать не нужно.', $crmUrl->portFail);
-        self::assertEquals('Неверный протокол. Допустим только https.', $crmUrl->schemeFail);
-        self::assertEquals('Путь домена должен быть пустым.', $crmUrl->pathFail);
+        self::assertEquals('Invalid domain specified.', $crmUrl->domainFail);
+        self::assertEquals('Invalid URL.', $crmUrl->noValidUrlHost);
+        self::assertEquals('Do not need to specify the port.', $crmUrl->portFail);
+        self::assertEquals('Invalid protocol. The only https is allowed.', $crmUrl->schemeFail);
+        self::assertEquals('The domain path must be empty.', $crmUrl->pathFail);
         self::assertEquals(CrmUrl::class .'Validator', $crmUrl->validatedBy());
     }
 
