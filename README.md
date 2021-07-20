@@ -1,1 +1,1 @@
-Валидатор для проектов на Symfony
+Validator for RetailCRM projects on Symfony

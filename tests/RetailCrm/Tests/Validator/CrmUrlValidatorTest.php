@@ -6,6 +6,7 @@ namespace RetailCrm\Tests\Validator;
 use PHPUnit\Framework\TestCase;
 use RetailCrm\Validator\CrmUrl;
 use RetailCrm\Validator\CrmUrlValidator;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidatorFactory;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Context\ExecutionContextFactory;
@@ -18,39 +19,47 @@ use Symfony\Contracts\Translation\TranslatorTrait;
 
 class CrmUrlValidatorTest extends TestCase
 {
-    public function testValidateSuccess()
+    public function testValidateSuccess(): void
     {
         $validCrms = [
-            "https://asd.retailcrm.ru",
-            "https://test.retailcrm.pro",
-            "https://raisa.retailcrm.es",
-            "https://blabla.simla.com",
-            "https://blabla.simlachat.com",
-            "https://blabla.simlachat.ru",
-            "https://blabla.ecomlogic.com",
+            'https://asd.retailcrm.ru',
+            'https://test.retailcrm.pro',
+            'https://raisa.retailcrm.es',
+            'https://blabla.simla.com',
+            'https://blabla.simlachat.com',
+            'https://blabla.simlachat.ru',
+            'https://blabla.ecomlogic.com',
+            'https://retailcrm.inventive.ru',
+            'https://crm.baucenter.ru',
+            'https://crm.holodilnik.ru',
+            'https://crm.eco.lanit.ru',
+            'https://ecom.inventive.ru',
+            'https://retailcrm.tvoydom.ru',
         ];
-
+    
         $translator = new class() implements TranslatorInterface, LocaleAwareInterface {
             use TranslatorTrait;
         };
+    
+        $metadata = new LazyLoadingMetadataFactory();
+        $factory = new ExecutionContextFactory($translator);
         $validator = new CrmUrlValidator();
-        $context = new ExecutionContext(
-            Validation::createValidatorBuilder()->getValidator(),
-            \stdClass::class,
-            $translator
-        );
-
-        $context->setConstraint(new CrmUrl());
-        $validator->initialize($context);
 
         foreach ($validCrms as $validCrm) {
+            $context = new ExecutionContext(
+                new RecursiveValidator($factory, $metadata, new ConstraintValidatorFactory()),
+                CrmUrl::class,
+                $translator
+            );
+            $context->setConstraint(new CrmUrl());
+            $validator->initialize($context);
             $validator->validate($validCrm, new CrmUrl());
 
             self::assertEmpty($context->getViolations());
         }
     }
 
-    public function testValidateFailed()
+    public function testValidateFailed(): void
     {
         $failedUrls = [
             [
@@ -71,7 +80,9 @@ class CrmUrlValidatorTest extends TestCase
             ],
             [
                 'url' => 'https:/blabla.simlachat.ru',
-                'errors' => ['Invalid URL.'],
+                'errors' => [
+                    'Invalid URL.',
+                ],
             ],
             [
                 'url' => 'htttps://blabla.ecomlogic.com',
@@ -86,15 +97,15 @@ class CrmUrlValidatorTest extends TestCase
                 'errors' => [
                     'Invalid protocol. The only https is allowed.',
                     'The domain path must be empty.',
-                    'Invalid domain specified.',
                 ],
             ],
             [
-                'url' => 'https://blabla.eecomlogic.com/test',
+                'url' => 'https://test:test@blabla.eecomlogic.com/test?test=test#fragment',
                 'errors' => [
-                    'Invalid protocol. The only https is allowed.',
+                    'The query must be empty.',
+                    'No need to provide authorization data',
+                    'The fragment must be empty.',
                     'The domain path must be empty.',
-                    'Invalid domain specified.',
                 ],
             ],
         ];
@@ -121,7 +132,7 @@ class CrmUrlValidatorTest extends TestCase
                 self::assertEquals($context->getViolations()->get($key)->getMessage(), $failedUrl['errors'][$key]);
             }
 
-            self::assertEquals($context->getViolations()->count(), count($failedUrl['errors']));
+            self::assertCount($context->getViolations()->count(), $failedUrl['errors']);
         }
     }
 }
