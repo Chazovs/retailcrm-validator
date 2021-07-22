@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e9041d37e43d8151aa6b6320b860a98",
+    "content-hash": "06e3ff0e57f0fcd2c5feab4b6e07c7cb",
     "packages": [
         {
             "name": "symfony/deprecation-contracts",
@@ -777,16 +777,16 @@
         },
         {
             "name": "pdepend/pdepend",
-            "version": "2.9.1",
+            "version": "2.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "1632f0cee84512ffd6dde71e58536b3b06528c41"
+                "reference": "1fd30f4352b630ad53fec3fd5e8b8ba760f85596"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/1632f0cee84512ffd6dde71e58536b3b06528c41",
-                "reference": "1632f0cee84512ffd6dde71e58536b3b06528c41",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/1fd30f4352b630ad53fec3fd5e8b8ba760f85596",
+                "reference": "1fd30f4352b630ad53fec3fd5e8b8ba760f85596",
                 "shasum": ""
             },
             "require": {
@@ -822,7 +822,7 @@
             "description": "Official version of pdepend to be handled with Composer",
             "support": {
                 "issues": "https://github.com/pdepend/pdepend/issues",
-                "source": "https://github.com/pdepend/pdepend/tree/2.9.1"
+                "source": "https://github.com/pdepend/pdepend/tree/2.10.0"
             },
             "funding": [
                 {
@@ -830,7 +830,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-15T21:36:28+00:00"
+            "time": "2021-07-20T09:56:09+00:00"
         },
         {
             "name": "phar-io/manifest",
@@ -3013,9 +3013,9 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4",
+        "php": ">=7.3",
         "ext-json": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

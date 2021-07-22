@@ -2,7 +2,6 @@
 
 namespace RetailCrm\Tests\Validator;
 
-
 use PHPUnit\Framework\TestCase;
 use RetailCrm\Validator\CrmUrl;
 use RetailCrm\Validator\CrmUrlValidator;
@@ -64,29 +63,29 @@ class CrmUrlValidatorTest extends TestCase
         $failedUrls = [
             [
                 'url' => 'http://asd.retailcrm.ru',
-                'errors' => ['Invalid protocol. The only https is allowed.'],
+                'errors' => ['Incorrect protocol. Only https is allowed.'],
             ],
             [
                 'url' => 'https://test.retailcrm.pro:8080',
-                'errors' => ['Do not need to specify the port.'],
+                'errors' => ['The port does not need to be specified.'],
             ],
             [
                 'url' => 'https://raisa.retailcrm.ess',
-                'errors' => ['Invalid domain specified.'],
+                'errors' => ['An invalid domain is specified.'],
             ],
             [
                 'url' => 'https://blabla.simlla.com',
-                'errors' => ['Invalid domain specified.'],
+                'errors' => ['An invalid domain is specified.'],
             ],
             [
                 'url' => 'https:/blabla.simlachat.ru',
                 'errors' => [
-                    'Invalid URL.',
+                    'Incorrect Host URL.',
                 ],
             ],
             [
                 'url' => 'htttps://blabla.ecomlogic.com',
-                'errors' => ['Invalid protocol. The only https is allowed.'],
+                'errors' => ['Incorrect protocol. Only https is allowed.'],
             ],
             [
                 'url' => 'https://blabla.ecomlogic.com/test',
@@ -95,7 +94,7 @@ class CrmUrlValidatorTest extends TestCase
             [
                 'url' => 'htttps://blabla.eecomlogic.com/test',
                 'errors' => [
-                    'Invalid protocol. The only https is allowed.',
+                    'Incorrect protocol. Only https is allowed.',
                     'The domain path must be empty.',
                 ],
             ],

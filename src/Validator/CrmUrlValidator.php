@@ -1,8 +1,6 @@
 <?php
 
-
 namespace RetailCrm\Validator;
-
 
 use JsonException;
 use Symfony\Component\Validator\Constraint;
@@ -21,13 +19,13 @@ class CrmUrlValidator extends ConstraintValidator
     /**
      * @var \Symfony\Component\Validator\Constraint
      */
-    private Constraint $constraint;
+    private $constraint;
     
     /**
      * Validate CRM URL
      *
      * @param mixed      $value URL from form
-     * @param Constraint $constraint Ограничение для валидации
+     * @param Constraint $constraint Restriction for validation
      */
     public function validate($value, Constraint $constraint): void
     {
