@@ -12,7 +12,7 @@ use RetailCrm\Validator\CrmUrl;
  */
 class CrmUrlTest extends TestCase
 {
-    public function testValidatedBy()
+    public function testValidatedBy(): void
     {
         $crmUrl = new CrmUrl();
 
@@ -24,7 +24,7 @@ class CrmUrlTest extends TestCase
         self::assertEquals(CrmUrl::class .'Validator', $crmUrl->validatedBy());
     }
 
-    public function testGetTargets()
+    public function testGetTargets(): void
     {
         $crmUrl = new CrmUrl();
         self::assertEquals('property', $crmUrl->getTargets());

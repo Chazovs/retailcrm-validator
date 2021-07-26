@@ -50,6 +50,7 @@ class CrmUrlValidatorTest extends TestCase
                 CrmUrl::class,
                 $translator
             );
+
             $context->setConstraint(new CrmUrl());
             $validator->initialize($context);
             $validator->validate($validCrm, new CrmUrl());
@@ -80,7 +81,7 @@ class CrmUrlValidatorTest extends TestCase
             [
                 'url' => 'https:/blabla.simlachat.ru',
                 'errors' => [
-                    'Incorrect Host URL.',
+                    'Incorrect URL.',
                 ],
             ],
             [
@@ -94,17 +95,17 @@ class CrmUrlValidatorTest extends TestCase
             [
                 'url' => 'htttps://blabla.eecomlogic.com/test',
                 'errors' => [
-                    'Incorrect protocol. Only https is allowed.',
                     'The domain path must be empty.',
+                    'Incorrect protocol. Only https is allowed.',
                 ],
             ],
             [
                 'url' => 'https://test:test@blabla.eecomlogic.com/test?test=test#fragment',
                 'errors' => [
-                    'The query must be empty.',
-                    'No need to provide authorization data',
-                    'The fragment must be empty.',
+                    'No need to provide authorization data.',
+                    'The fragment should be blank.',
                     'The domain path must be empty.',
+                    'The query must be blank.',
                 ],
             ],
         ];
