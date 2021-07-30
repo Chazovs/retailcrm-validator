@@ -35,11 +35,11 @@ class CrmUrlValidatorTest extends TestCase
             'https://ecom.inventive.ru',
             'https://retailcrm.tvoydom.ru',
         ];
-    
-        $translator = new class() implements TranslatorInterface, LocaleAwareInterface {
+
+        $translator = new class () implements TranslatorInterface, LocaleAwareInterface {
             use TranslatorTrait;
         };
-    
+
         $metadata = new LazyLoadingMetadataFactory();
         $factory = new ExecutionContextFactory($translator);
         $validator = new CrmUrlValidator();
@@ -110,7 +110,7 @@ class CrmUrlValidatorTest extends TestCase
             ],
         ];
 
-        $translator = new class() implements TranslatorInterface, LocaleAwareInterface {
+        $translator = new class () implements TranslatorInterface, LocaleAwareInterface {
             use TranslatorTrait;
         };
 
@@ -128,7 +128,7 @@ class CrmUrlValidatorTest extends TestCase
             $validator->initialize($context);
             $validator->validate($failedUrl['url'], new CrmUrl());
 
-            foreach ($failedUrl['errors'] as $key=>$error){
+            foreach ($failedUrl['errors'] as $key => $error) {
                 self::assertEquals($context->getViolations()->get($key)->getMessage(), $failedUrl['errors'][$key]);
             }
 
