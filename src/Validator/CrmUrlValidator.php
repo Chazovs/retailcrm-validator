@@ -13,8 +13,8 @@ use Symfony\Component\Validator\ConstraintValidator;
  */
 class CrmUrlValidator extends ConstraintValidator
 {
-    public const BOXDOMAINSURL = "https://infra-data.retailcrm.tech/box-domains.json";
-    public const CRMDOMAINSURL = "https://infra-data.retailcrm.tech/crm-domains.json";
+    public const BOX_DOMAINS_URL = "https://infra-data.retailcrm.tech/box-domains.json";
+    public const CRM_DOMAINS_URL = "https://infra-data.retailcrm.tech/crm-domains.json";
 
     /**
      * @var \Symfony\Component\Validator\Constraint
@@ -30,20 +30,20 @@ class CrmUrlValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint): void
     {
         $this->constraint = $constraint;
-        $filtredUrl = filter_var($value, FILTER_VALIDATE_URL);
+        $filteredUrl = filter_var($value, FILTER_VALIDATE_URL);
 
-        if (false === $filtredUrl) {
+        if (false === $filteredUrl) {
             $this->context->buildViolation($constraint->noValidUrl)->addViolation();
 
             return;
         }
 
-        $urlArray = parse_url($filtredUrl);
+        $urlArray = parse_url($filteredUrl);
 
         if ($this->checkUrlFormat($urlArray)) {
             $mainDomain = $this->getMainDomain($urlArray['host']);
-            $existInCrm = $this->checkDomains(self::CRMDOMAINSURL, $mainDomain);
-            $existInBox = $this->checkDomains(self::BOXDOMAINSURL, $urlArray['host']);
+            $existInCrm = $this->checkDomains(self::CRM_DOMAINS_URL, $mainDomain);
+            $existInBox = $this->checkDomains(self::BOX_DOMAINS_URL, $urlArray['host']);
 
             if (false === $existInCrm && false === $existInBox) {
                 $this->context->buildViolation($constraint->domainFail)->addViolation();
@@ -216,11 +216,11 @@ class CrmUrlValidator extends ConstraintValidator
     }
 
     /**
-     * @param $host
+     * @param string $host
      *
      * @return string
      */
-    private function getMainDomain($host): string
+    private function getMainDomain(string $host): string
     {
         $hostArray = explode('.', $host);
         unset($hostArray[0]);

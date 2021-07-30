@@ -21,7 +21,7 @@ class CrmUrlTest extends TestCase
         self::assertEquals('The port does not need to be specified.', $crmUrl->portFail);
         self::assertEquals('Incorrect protocol. Only https is allowed.', $crmUrl->schemeFail);
         self::assertEquals('The domain path must be empty.', $crmUrl->pathFail);
-        self::assertEquals(CrmUrl::class .'Validator', $crmUrl->validatedBy());
+        self::assertEquals(CrmUrl::class . 'Validator', $crmUrl->validatedBy());
     }
 
     public function testGetTargets(): void
