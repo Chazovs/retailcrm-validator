@@ -1,5 +1,5 @@
 {
-  "name": "retailcrm/validator",
+  "name": "retailcrm/url-validator",
   "description": "Validator for symfony projects",
   "type": "library",
   "keywords": ["Validator", "RetailCRM"],
@@ -14,7 +14,7 @@
   "require": {
     "php": ">=7.3",
     "ext-json": "*",
-    "symfony/validator": "^5.3"
+    "symfony/validator": "^5"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5.7",
