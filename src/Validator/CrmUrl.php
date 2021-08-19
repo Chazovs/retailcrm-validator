@@ -1,6 +1,6 @@
 <?php
 
-namespace RetailCrm\Validator;
+namespace Chazov\Validator;
 
 use Symfony\Component\Validator\Constraint;
 
@@ -62,11 +62,6 @@ class CrmUrl extends Constraint
      * @var string
      */
     public $getFileError = 'Unable to obtain reference values.';
-
-    public function validatedBy(): string
-    {
-        return static::class . 'Validator';
-    }
 
     public function getTargets()
     {
