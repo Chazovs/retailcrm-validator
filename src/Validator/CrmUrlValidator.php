@@ -1,6 +1,6 @@
 <?php
 
-namespace RetailCrm\Validator;
+namespace Chazov\Validator;
 
 use JsonException;
 use Symfony\Component\Validator\Constraint;
